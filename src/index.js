@@ -1,9 +1,9 @@
-const {odd, even} = require('./var');
+const { odd, even } = require('./var');
 const checkNumber = require('./func');
 const checkOddOrEven = require('./func');
 
 function checkStringOddOrEven(str) {
-    if(str.length%2) { //홀수이면
+    if (str.length % 2) { //홀수이면
         return odd;
     }
     return even;
