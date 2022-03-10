@@ -1,0 +1,16 @@
+{
+  "name": "learn-mongoose2",
+  "version": "0.0.1",
+  "description": "몽구스를 배우자",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app"
+  },
+  "author": "leedongyeop",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "mongoose": "^6.2.1",
+    "nunjucks": "^3.2.3"
+  }
+}
