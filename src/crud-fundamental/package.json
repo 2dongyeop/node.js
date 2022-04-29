@@ -1,0 +1,23 @@
+{
+  "name": "crud_fundamental",
+  "version": "1.0.0",
+  "description": "wisotf-seminar-node.js 간단한 CRUD를 구현해보는 맛보기 코드",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/wisoftlabs/member/dongyeop/crud-fundamental.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/wisoftlabs/member/dongyeop/crud-fundamental/issues"
+  },
+  "homepage": "https://gitlab.com/wisoftlabs/member/dongyeop/crud-fundamental#readme",
+  "dependencies": {
+    "nodemon": "^2.0.15",
+    "sanitize-html": "^2.7.0"
+  }
+}
