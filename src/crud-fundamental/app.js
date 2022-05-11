@@ -1,90 +1,87 @@
+const { throws } = require('assert');
 const fs = require('fs');
 const http = require('http');
 const url = require('url');
 
+const menu = `<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>진욱이네 중국집</title>
+</head>
+<body>
+    <h1> 진욱이네 중국집 메뉴판<h1>
+    <h2> <주의사항> 곱빼기는 주문 안됩니다. <h2>
+    <h3> 짜장면 - 7,000원 <h3>
+    <h3> 짬뽕 - 8,000원 <h3>
+    <h3> 탕수육 - 16,000원 <h3>
+    <h3> 팔보채 - 59,000원 <h3>
+</body>
+`
 //요청 url의 pathname을 보고 라우팅을 분리
 const server = http.createServer((req, res) => {
     const urlObj = url.parse(req.url, true);
     const pathName = urlObj.pathname;
 
     if (pathName === '/') {
-        //Read : fs.readdir로 목록 조회 + fs.readFile로 해당 파일의 내용 조회
+        console.log("메뉴판을 보여줍니다.");
+        res.end(menu);
+
+    } else if (pathName === '/create') {
+        console.log();
         fs.readdir(`./data`, 'utf8', (err, files) => {
             if (err) throw err;
-            //파일 별 내용 출력
-            fs.readFile(`./data/ironman.txt`, 'utf8', (err2, data) => {
+            //테이블(파일) 별 주문내역(내용) 출력
+            fs.readFile(`./data/1st-table.txt`, 'utf8', (err2, data) => {
                 if (err2) throw err2;
                 res.writeHead(200, { 'Content-Type': 'text/html' });
-                console.log(files);
                 console.log(data);
-                res.end("READ");
             });
-            fs.readFile(`./data/superman.txt`, 'utf8', (err3, data) => {
+            fs.readFile(`./data/2nd-table.txt`, 'utf8', (err3, data) => {
                 if (err3) throw err3;
                 res.writeHead(200, { 'Content-Type': 'text/html' });
                 console.log(data);
-                res.end("READ");
             });
-            fs.readFile(`./data/superwoman.txt`, 'utf8', (err4, data) => {
+            fs.readFile(`./data/3rd-table.txt`, 'utf8', (err4, data) => {
                 if (err4) throw err4;
                 res.writeHead(200, { 'Content-Type': 'text/html' });
                 console.log(data);
-                res.end("READ");
-            });
-            fs.readFile(`./data/hulk.txt`, 'utf8', (err5, data) => {
-                if (err5) { //아직 hulk가 생성이 안 됐다면
-                    console.log("")
-                } else {
-                    res.writeHead(200, { 'Content-Type': 'text/html' });
-                    console.log(data);
-                    res.end("READ");
-                }
-            });
-        });
-
-    } else if (pathName === '/create') {
-        //사용자에게 데이터를 입력받아야 하는 부분이지만
-        //hulk.txt 파일을 생성하도록 지정
-        fs.writeFile(`./data/hulk.txt`, "헐크", 'utf8', () => {
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end("CREATE hulk.txt");
-        });
-        //생성 후 파일 목록들을 보여줌
-        console.log("=====생성 후 파일 목록=====")
-        fs.readdir(`./data`, 'utf8', (err, files) => {
-            if (err) throw err;
-            fs.readFile(`./data/ironman.txt`, 'utf8', (err2, data) => {
-                if (err) throw err;
-                res.writeHead(200, { 'Content-Type': 'text/html' });
-                console.log(files);
-                console.log("CREATE hulk.txt")
-                res.end("CREATE");
+                res.end("CREATE ORDER LIST");
             });
         });
     } else if (pathName === '/update') {
+        console.log();
+        //additional-order.txt 파일을 생성하도록 지정
+        fs.writeFile(`./data/additional-order.txt`, "모든 테이블 음료 서비스 추가", 'utf8', () => {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end("추가 주문이 접수되었습니다.");
+        });
         //Update form
-        //어느 파일을 어떻게 수정할 지 입력을 받아야 하지만,
-        //헐크 파일을 수정하도록 지정
-        fs.appendFile('./data/hulk.txt', "\n헐크를 수정합니다.", () => {
+        //현재까지의 주문 내역을 수정하는 작업을 고정
+        fs.appendFile('./data/1st-table.txt', " 서비스 음료 추가", () => {
             res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end("UPDATE");
+            res.end("UPDATE ORDER LIST");
         });
-        console.log("=====수정된 내용=====")
-        //수정된 내용을 콘솔에 출력
-        fs.readFile(`./data/hulk.txt`, 'utf8', (err2, data) => {
+        fs.appendFile('./data/2nd-table.txt', " 서비스 음료 추가", () => {
             res.writeHead(200, { 'Content-Type': 'text/html' });
-            console.log(data);
+            res.end("UPDATE ORDER LIST");
         });
+        fs.appendFile('./data/3rd-table.txt', " 서비스 음료 추가", () => {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end("UPDATE ORDER LIST");
+        });
+        console.log("서비스 음료 적립, 각 테이블 별 주문 내역이 수정되었습니다.")
+
     } else if (pathName === '/delete') {
+        console.log();
         //Delete
-        //어느 파일을 삭제할 지 입력을 받아야 하지만,
-        //헐크 파일이 삭제되도록 지정
-        console.log("=====파일 삭제=====")
-        fs.unlink(`./data/hulk.txt`, () => {
-            res.writeHead(302, { Location: `/` });
-            console.log("DELETE hulk.txt")
-            res.end("DELETE");
-        })
+        //추가 주문 파일이 삭제되도록 지정
+        console.log("일일 정산을 위해 서비스 내역 삭제")
+        fs.unlink(`./data/addtional-order.txt`, () => {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end("DELETE ORDER LIST");
+        });
     } else {
         //없는 경로에 접근
         res.writeHead(404, { 'Content-type': 'text/html' });
