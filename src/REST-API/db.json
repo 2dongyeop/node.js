@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Dongyeop Lee"
+    },
+    {
+      "id": 2,
+      "name": "Jinuk Lee"
+    },
+    {
+      "id": 3,
+      "name": "Sena Lim"
+    }
+  ]
+}
