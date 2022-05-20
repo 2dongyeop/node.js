@@ -1,0 +1,11 @@
+GET localhost:3000/users
+Accept: application/json
+
+###
+POST localhost:3000/users
+Content-Type: application/json
+
+{
+"id":3,
+"name": "Mingi Kim"
+}
